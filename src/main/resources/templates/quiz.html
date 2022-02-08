@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <title>Spring MVC - product by id</title>
+    <link  href="http://cdn.jsdelivr.net/webjars/bootstrap/4.3.1/css/bootstrap.min.css"
+           th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}"
+           rel="stylesheet" media="screen"
+    />
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/3.4.1/jquery.min.js"
+            th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"
+    ></script>
+    <link href="../static/spring-core.css"
+          th:href="@{/spring-core.css}" rel="stylesheet" media="screen" />
+</head>
+<body>
+    <div class="container">
+        <h2>Quiz</h2>
+        <h3 th:text="${user}"></h3>
+        <form th:object="${questions}" th:action="@{/getresult}" method="post">
+            <div class="ques-box bg-dark text-light" th:each="q: ${questions.answers.entrySet()}">
+                <p th:text="${q.getKey().question}" />
+                <div th:each="an : ${q.getKey().possibleAnswers}">
+                    <input type="radio" th:field="*{ans[__${q.key.getId()}__]}" th:value="${an.answer}"/>
+                    <p th:text="${an.answer}" />
+                </div>
+
+            </div>
+            <button type="submit" class="btn btn-danger d-block mx-auto mt-4">Submit Answer</button>
+
+        </form>
+
+    </div>
+</body>
+</html>
