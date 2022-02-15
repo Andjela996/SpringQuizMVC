@@ -8,6 +8,9 @@ import java.util.Iterator;
 
 @Service
 public class UserServiceImpl implements UserService{
+
+    private User user;
+
     @Override
     public boolean checkLogin(LoginCredentials loginCredentials, Iterable<User> users) {
         //check if user exists
@@ -18,6 +21,7 @@ public class UserServiceImpl implements UserService{
         while(iterator.hasNext()){
             u1 = (User) iterator.next();
             System.out.println("USER:"+u1.getUsername());
+            user = u1;
             if(u1.getUsername().equals(loginCredentials.getUsername()) && u1.getPassword().equals(loginCredentials.getPassword())){
 
                 check=true;
@@ -26,5 +30,10 @@ public class UserServiceImpl implements UserService{
 
         }
         return check;
+    }
+
+    @Override
+    public User getUser() {
+        return user;
     }
 }

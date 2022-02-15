@@ -2,6 +2,8 @@ package com.example.demo2.controllers;
 
 import com.example.demo2.login.LoginCredentials;
 import com.example.demo2.misc.QuestionWrapper;
+import com.example.demo2.models.Result;
+import com.example.demo2.models.User;
 import com.example.demo2.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +12,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class QuizController {
@@ -66,7 +71,8 @@ public class QuizController {
 
     @RequestMapping("/results")
     public String getAllResults(Model model){
-        model.addAttribute("results", resultRepository.findAll());
+        List<Result> resultList = resultRepository.findTop10ByOrderByResultDesc();
+        model.addAttribute("results", resultList);
         return "toplist";
     }
 
@@ -75,6 +81,13 @@ public class QuizController {
     public @ResponseBody String
     result(@ModelAttribute(name="questions") QuestionWrapper questions){
         System.out.println(questions.getAns());
-        return "result saved";
+        questionService.setAnswers(questions);
+        double result = questionService.calculateResult();
+        Result r = new Result();
+        Optional<User> u = userRepository.findById(userService.getUser().getId());
+        r.setUser(u.get());
+        r.setResult(result);
+        resultRepository.save(r);
+        return "result saved, " + result +"," + u.get().getUsername();
     }
 }

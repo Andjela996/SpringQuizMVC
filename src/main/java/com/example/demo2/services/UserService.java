@@ -5,5 +5,5 @@ import com.example.demo2.models.User;
 
 public interface UserService {
     boolean checkLogin(LoginCredentials loginCredentials, Iterable<User> users);
-
+    User getUser();
 }

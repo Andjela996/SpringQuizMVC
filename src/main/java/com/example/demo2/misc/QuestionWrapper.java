@@ -1,24 +1,24 @@
 package com.example.demo2.misc;
 
 import com.example.demo2.models.Question;
-import org.springframework.stereotype.Component;
 
 
+import java.util.List;
 import java.util.Map;
 
 //@Component
 public class QuestionWrapper {
 
-    private Map<Question, String> answers;
+    private List<Question> questions;
 
     private Map<Long, String> ans;
 
-    public Map<Question, String> getAnswers() {
-        return answers;
+    public List<Question> getQuestions() {
+        return questions;
     }
 
-    public void setAnswers(Map<Question, String> answers) {
-        this.answers = answers;
+    public void setAnswers(List<Question> answers) {
+        this.questions = answers;
     }
 
     public Map<Long, String> getAns() {

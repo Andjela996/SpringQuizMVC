@@ -1,6 +1,6 @@
 package com.example.demo2.models;
 
-import jdk.nashorn.internal.runtime.logging.Logger;
+
 
 import javax.persistence.*;
 

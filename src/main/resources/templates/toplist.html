@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-    <title>Spring MVC - product by id</title>
+    <title>Spring Quiz</title>
     <link  href="http://cdn.jsdelivr.net/webjars/bootstrap/4.3.1/css/bootstrap.min.css"
            th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}"
            rel="stylesheet" media="screen"
@@ -14,6 +14,22 @@
           th:href="@{/spring-core.css}" rel="stylesheet" media="screen" />
 </head>
 <body>
+<div class="container">
+    <div th:if="${not #lists.isEmpty(results)}">
+        <h2>Top 10 results</h2>
+        <table class="table table-striped">
+            <tr>
+                <th>User</th>
+                <th>Result</th>
 
+            </tr>
+            <tr th:each="result : ${results}">
+                <td th:text="${result.user.username}"></td>
+                <td th:text="${result.result}"></td>
+
+            </tr>
+        </table>
+    </div>
+</div>
 </body>
 </html>

@@ -19,12 +19,18 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
+    public void setAnswers(QuestionWrapper questionWrapper) {
+        wrapper.setAns(questionWrapper.getAns());
+    }
+
+
+    @Override
     public void loadWrapper(Iterable<Question> questions){
         Iterator i = questions.iterator();
         wrapper = new QuestionWrapper();
-        Map<Question, String> map = new HashMap<>();
+        List<Question> map = new ArrayList<>();
         while(i.hasNext()){
-            map.put((Question) i.next(), "");
+            map.add((Question) i.next());
         }
         wrapper.setAnswers(map);
         Map<Long, String> map2 = new HashMap<>();
@@ -33,12 +39,6 @@ public class QuestionServiceImpl implements QuestionService {
         }
         wrapper.setAns(map2);
     }
-
-    /*@Override
-    public boolean checkAnswer(Question q, String ans) {
-        boolean check = q.getAnswer().equals(ans) ? true : false;
-        return check;
-    }*/
 
     @Override
     public ArrayList<Question> chooseQuestions(ArrayList<Question> questions, int number) {
@@ -52,10 +52,10 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public double calculateResult() {
-        int size = wrapper.getAnswers().size();
+        int size = wrapper.getQuestions().size();
         int correct=0;
-        for(Map.Entry<Question, String> entry : wrapper.getAnswers().entrySet()){
-            if(entry.getKey().getAnswer().equals(entry.getValue())) correct++;
+        for(Map.Entry<Long, String> q : wrapper.getAns().entrySet()){
+            if(wrapper.getQuestions().get(Math.toIntExact(q.getKey())).getAnswer().equals(q.getValue())) correct++;
         }
         return correct*100/size;
     }

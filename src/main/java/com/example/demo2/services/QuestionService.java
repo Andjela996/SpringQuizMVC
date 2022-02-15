@@ -11,4 +11,5 @@ public interface QuestionService {
     ArrayList<Question> chooseQuestions(ArrayList<Question> questions, int number);
     double calculateResult();
     QuestionWrapper getWrapper();
+    void setAnswers(QuestionWrapper questionWrapper);
 }
